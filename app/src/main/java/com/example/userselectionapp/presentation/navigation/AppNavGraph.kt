@@ -50,8 +50,8 @@ fun AppNavGraph() {
             )
         ) { backStackEntry ->
 
-            val userId = backStackEntry.arguments?.getInt("userId") ?: return@composable
-            UserDetailScreen(userId)
+            backStackEntry.arguments?.getInt("userId") ?: return@composable
+            UserDetailScreen()
 
         }
     }
