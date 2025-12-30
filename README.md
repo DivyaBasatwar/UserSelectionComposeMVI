@@ -37,4 +37,4 @@ A modern Android application built using **Jetpack Compose**, **Clean Architectu
 
 ---
 
-Built as part of interview preparation to learn modern Android development 🚀1
+Built as part of interview preparation to learn modern Android development
