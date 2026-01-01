@@ -1,4 +1,4 @@
-# User Selection App (Jetpack Compose)
+# User Selection App (MVI Focused)
 
 A modern Android application built using **Jetpack Compose**, **Clean Architecture**, and **MVVM**.
 
