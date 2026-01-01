@@ -3,9 +3,15 @@
 A modern Android application built using **Jetpack Compose**, **Clean Architecture**, and **MVVM**.
 
 ## Architecture
-- Clean Architecture (Presentation, Domain, Data)
-- MVVM
-- Repository pattern
+- Clean Architecture
+    - Domain
+    - Data
+    - Presentation (MVI)
+
+- MVI in Presentation Layer
+    - Intent → User actions
+    - State → UI state
+    - Event → One-time side effects
 
 ## Tech Stack
 - Kotlin
@@ -16,12 +22,14 @@ A modern Android application built using **Jetpack Compose**, **Clean Architectu
 - Unit Testing (ViewModel)
 
 ## Features
-- User list with selection / deselection
+- User list with select / deselect
+- Search users (minimum 3 characters)
 - Sticky submit button
-- Search users (after 3 characters)
+- Show selected users on submit
 - User detail screen
-- Toast event on submit
-- Loading state with centered progress indicator
+- Unidirectional data flow using MVI
+- State management with StateFlow
+- One-time events with SharedFlow
 
 ## Key Learnings
 - Managing UI state using StateFlow
@@ -29,6 +37,9 @@ A modern Android application built using **Jetpack Compose**, **Clean Architectu
 - Compose navigation with arguments
 - Clean separation of concerns
 - Dependency Injection with Hilt
+- Practical understanding of MVI
+- Difference between MVVM vs MVI
+- Handling state, events, and side effects
 
 ## How to Run
 1. Clone the repository
@@ -36,5 +47,3 @@ A modern Android application built using **Jetpack Compose**, **Clean Architectu
 3. Run on emulator or device
 
 ---
-
-Built as part of interview preparation to learn modern Android development
