@@ -43,18 +43,36 @@ fun UserListScreen(
     onUserClick : (Int) -> Unit,
 ){
     val context = LocalContext.current
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.state.collectAsState()
 
     // one time events
     LaunchedEffect(Unit) {
-        viewModel.events.collect { message ->
-            Toast.makeText(
-                context,
-                message,
-                Toast.LENGTH_SHORT
-            ).show()
+        viewModel.events.collect { event ->
+            when (event) {
+                is UserListEvent.ShowToast ->
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+
+                is UserListEvent.NavigationToUserDetail -> {
+                    onUserClick(event.userId)
+                }
+            }
         }
     }
+
+    LaunchedEffect(Unit) {
+        viewModel.processIntent(UserListIntent.ScreenLoaded)
+    }
+
+    val filteredUsers = remember(uiState.users, uiState.searchQuery) {
+        if (uiState.searchQuery.length < 3) {
+            uiState.users
+        } else {
+            uiState.users.filter {
+                it.name.contains(uiState.searchQuery, ignoreCase = true)
+            }
+        }
+    }
+
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier
@@ -64,17 +82,17 @@ fun UserListScreen(
             Header()
 
             SearchBar { query ->
-                viewModel.onSearchQueryChanged(query)
+                viewModel.processIntent(UserListIntent.SearchQueryChanged(query))
             }
 
             if(!uiState.isLoading){
                 UserList(
-                    users = uiState.users,
+                    users = filteredUsers,
                     onItemClick = { userId ->
                         onUserClick(userId)
                     },
                     onCheckToggle = { userId ->
-                        viewModel.toggleUserSelection(userId)
+                        viewModel.processIntent(UserListIntent.ToggleUserSelection(userId))
                     }
                 )
             }
@@ -90,7 +108,7 @@ fun UserListScreen(
         SubmitButton(
             modifier = Modifier.align(Alignment.BottomCenter),
             onClick = {
-                viewModel.submitSelectedUsers()
+                viewModel.processIntent(UserListIntent.SubmitClicked)
             }
         )
     }
